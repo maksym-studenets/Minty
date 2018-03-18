@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Minty.GraphUtils
 {
+    [Obsolete]
     class MintyVertex
     {
         public int vertexCount;

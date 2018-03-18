@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Minty.Model;
 
 namespace Minty.Service
 {
+    /// <summary>
+    /// Class MintyAlgorithm is the core class of the application. It includes
+    /// implementation of the Minty's algorithm for finding the shortest path in the graph.
+    /// </summary>
     class MintyAlgorithm
     {
         private List<Vertex> vertices;
@@ -17,12 +19,24 @@ namespace Minty.Service
         private Dictionary<Vertex, Vertex> predecessors;
         private Dictionary<Vertex, Int32> distances;
 
+        /// <summary>
+        /// Constructor that instantiates a new object of MintyAlgorithm class.
+        /// Takes an instance of Graph as a parameter. Graph reference is required
+        /// to get a list of vertices and edges in the graph. These will be further
+        /// used for processing
+        /// </summary>
+        /// <param name="graph">An instance of Graph object that will be processed
+        /// using Minty's algorithm to find the shortest path</param>
         public MintyAlgorithm(Graph graph) {
             this.vertices = new List<Vertex>(graph.Vertices);
             this.edges = new List<Edge>(graph.Edges);
 
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="source"></param>
         public void execute(Vertex source) {
             settledVertices = new HashSet<Vertex>();
             unsettledVertices = new HashSet<Vertex>();

@@ -38,9 +38,10 @@
             this.graphMatrixGridView = new System.Windows.Forms.DataGridView();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.calculateMintyShortestPathButton = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
             this.startVertexComboBox = new System.Windows.Forms.ComboBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.calculateMintyShortestPathButton = new System.Windows.Forms.Button();
+            this.saveGraphToFileButton = new System.Windows.Forms.Button();
             this.manualNetworkGroupBox.SuspendLayout();
             this.readNetworkFromFileGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.graphMatrixGridView)).BeginInit();
@@ -115,10 +116,12 @@
             // 
             // graphMatrixGridView
             // 
+            this.graphMatrixGridView.AllowUserToAddRows = false;
+            this.graphMatrixGridView.AllowUserToDeleteRows = false;
             this.graphMatrixGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.graphMatrixGridView.Location = new System.Drawing.Point(8, 19);
+            this.graphMatrixGridView.Location = new System.Drawing.Point(8, 45);
             this.graphMatrixGridView.Name = "graphMatrixGridView";
-            this.graphMatrixGridView.Size = new System.Drawing.Size(604, 325);
+            this.graphMatrixGridView.Size = new System.Drawing.Size(604, 299);
             this.graphMatrixGridView.TabIndex = 5;
             // 
             // openFileDialog
@@ -127,6 +130,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.saveGraphToFileButton);
             this.groupBox1.Controls.Add(this.startVertexComboBox);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.calculateMintyShortestPathButton);
@@ -136,7 +140,23 @@
             this.groupBox1.Size = new System.Drawing.Size(618, 413);
             this.groupBox1.TabIndex = 6;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "groupBox1";
+            // 
+            // startVertexComboBox
+            // 
+            this.startVertexComboBox.FormattingEnabled = true;
+            this.startVertexComboBox.Location = new System.Drawing.Point(59, 352);
+            this.startVertexComboBox.Name = "startVertexComboBox";
+            this.startVertexComboBox.Size = new System.Drawing.Size(121, 21);
+            this.startVertexComboBox.TabIndex = 8;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(6, 355);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(49, 13);
+            this.label2.TabIndex = 7;
+            this.label2.Text = "Початок";
             // 
             // calculateMintyShortestPathButton
             // 
@@ -148,22 +168,14 @@
             this.calculateMintyShortestPathButton.UseVisualStyleBackColor = true;
             this.calculateMintyShortestPathButton.Click += new System.EventHandler(this.calculateMintyShortestPathButton_Click);
             // 
-            // label2
+            // saveGraphToFileButton
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 355);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(49, 13);
-            this.label2.TabIndex = 7;
-            this.label2.Text = "Початок";
-            // 
-            // startVertexComboBox
-            // 
-            this.startVertexComboBox.FormattingEnabled = true;
-            this.startVertexComboBox.Location = new System.Drawing.Point(59, 352);
-            this.startVertexComboBox.Name = "startVertexComboBox";
-            this.startVertexComboBox.Size = new System.Drawing.Size(121, 21);
-            this.startVertexComboBox.TabIndex = 8;
+            this.saveGraphToFileButton.Location = new System.Drawing.Point(512, 16);
+            this.saveGraphToFileButton.Name = "saveGraphToFileButton";
+            this.saveGraphToFileButton.Size = new System.Drawing.Size(100, 23);
+            this.saveGraphToFileButton.TabIndex = 9;
+            this.saveGraphToFileButton.Text = "Зберегти у файл";
+            this.saveGraphToFileButton.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
@@ -201,6 +213,7 @@
         private System.Windows.Forms.Button calculateMintyShortestPathButton;
         private System.Windows.Forms.ComboBox startVertexComboBox;
         private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Button saveGraphToFileButton;
     }
 }
 

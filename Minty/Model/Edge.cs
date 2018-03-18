@@ -18,6 +18,13 @@ namespace Minty.Model
         public Vertex Destination { get => destination; }
         public int Weight { get => weight; }
 
+        public Edge(Vertex start, Vertex end, int weight)
+        {
+            source = start;
+            destination = end;
+            this.weight = weight;
+        }
+
         public Edge(int id, Vertex start, Vertex end, int weight)
         {
             this.id = id;

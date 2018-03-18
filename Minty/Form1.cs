@@ -2,18 +2,28 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 
+using Minty.Model;
+
 namespace Minty
 {
 
     /// <summary>
-    /// This class 
+    /// This class defines the main GUI form of the application and provides
+    /// handlers for events that occur when a user interacts with UI controls.
+    /// In terms of the MVC pattern, this class acts as a controller.
     /// </summary>
+    [Obsolete("Minty.GraphUtils is deprecated. Use Minty.Model and Minty.Service instead")]
     public partial class Form1 : Form
     {
 
         private int vertexCount = 0;
-        private GraphUtils.Graph graph;
+        private Graph graph;
+        private LinkedList<Vertex> path;
+
+        #region DEPRECATED_MEMBERS
         private GraphUtils.MintyVertex[] mintyResult;
+        private GraphUtils.Graph mGraph;
+        #endregion
 
         public Form1()
         {
@@ -24,7 +34,7 @@ namespace Minty
         {
             bool parseResult = int.TryParse(vertexCountTextBox.Text, out vertexCount);
 
-            InitializeUiLayout(vertexCount);
+            initializeUiLayout(vertexCount);
 
             if ((vertexCount <= 0 || vertexCount > 500) || !parseResult)
             {
@@ -49,7 +59,7 @@ namespace Minty
             }
         }
 
-        private void InitializeUiLayout(int vertexCount)
+        private void initializeUiLayout(int vertexCount)
         {
             graphMatrixGridView.Rows.Clear();
             graphMatrixGridView.Columns.Clear();
@@ -63,14 +73,13 @@ namespace Minty
                     DataGridViewColumnSortMode.NotSortable;
                 graphMatrixGridView.Rows.Add();
                 graphMatrixGridView.Rows[i].HeaderCell.Value = (i + 1).ToString();
-
                 startVertexComboBox.Items.Add(i + 1);
             }
         }
 
-        private void InitializeUiLayout(GraphUtils.Graph graph)
+        private void initializeUiLayout(Graph graph)
         {
-            vertexCount = graph.VertexCount;
+            vertexCount = graph.Vertices.Capacity;
             this.graph = graph;
 
             graphMatrixGridView.Rows.Clear();
@@ -91,9 +100,62 @@ namespace Minty
             startVertexComboBox.SelectedValue = startVertexComboBox.Items[0];
         }
 
+        [Obsolete]
+        private void InitializeUiLayout(GraphUtils.Graph graph)
+        {
+            vertexCount = graph.VertexCount;
+            this.mGraph = graph;
+
+            graphMatrixGridView.Rows.Clear();
+            graphMatrixGridView.Columns.Clear();
+            graphMatrixGridView.Refresh();
+
+            for (int i = 0; i < vertexCount; i++)
+            {
+                graphMatrixGridView.Columns.Add(i.ToString(), (i + 1).ToString());
+                graphMatrixGridView.Columns[i].Width = 40;
+                graphMatrixGridView.Columns[i].SortMode =
+                    DataGridViewColumnSortMode.NotSortable;
+                graphMatrixGridView.Rows.Add();
+                graphMatrixGridView.Rows[i].HeaderCell.Value = (i + 1).ToString();
+
+                startVertexComboBox.Items.Add(i + 1);
+            }
+            startVertexComboBox.SelectedValue = startVertexComboBox.Items[0];
+        }
+
+        private void readGraphFromUiMatrix()
+        {
+            Graph graph = new Graph();
+            List<Vertex> vertices = new List<Vertex>();
+            List<Edge> edges = new List<Edge>();
+
+            for (int i = 0; i < vertexCount; i++) {
+                vertices.Add(new Vertex(i + 1));
+            }
+            graph.Vertices = vertices;
+
+            for (int i = 0; i < graphMatrixGridView.RowCount; i++) {
+                for (int j = 0; j < graphMatrixGridView.ColumnCount; j++) {
+                   // try {
+                        if (graphMatrixGridView[j, i].Value != null) {
+                            Edge edge = new Edge(vertices[i], vertices[j],
+                                int.Parse(graphMatrixGridView[j, i].Value.ToString()));
+                            edges.Add(edge);
+                        }
+                    /*} catch(Exception ex) {
+                        MessageBox.Show("Failed to read values", "Error");
+                    }*/
+                }
+            }
+            graph.Edges = edges;
+        }
+
+
+        [Obsolete]
         private void ReadGraphFromUiMatrix()
         {
-            graph = new GraphUtils.Graph(vertexCount);
+            mGraph = new GraphUtils.Graph(vertexCount);
             for (int i = 0; i < graphMatrixGridView.RowCount; i++)
             {
                 for (int j = 0; j < graphMatrixGridView.ColumnCount; j++) {
@@ -101,7 +163,7 @@ namespace Minty
                     {
                         if (graphMatrixGridView[j, i].Value != null)
                         {
-                            graph[i, j] = double.Parse(graphMatrixGridView[j, i]
+                            mGraph[i, j] = double.Parse(graphMatrixGridView[j, i]
                                 .Value.ToString());
                         }
                     } catch (Exception ex)
@@ -116,8 +178,24 @@ namespace Minty
         {
             try
             {
-                ReadGraphFromUiMatrix();
-                mintyResult = graph.MintyAnalyze(1);
+                //ReadGraphFromUiMatrix();
+                readGraphFromUiMatrix();
+
+
+                Console.WriteLine("=== TEST ===");
+                foreach (Vertex vertex in graph.Vertices) {
+                    Console.WriteLine(vertex.ToString());
+                }
+                foreach (Edge edge in graph.Edges) {
+                    Console.WriteLine(edge.Source.ToString() + " - " + edge.Destination + ": " +
+                        edge.Weight);
+                }
+                Console.WriteLine("=== END TEST ===");
+
+
+
+                /*
+                mintyResult = mGraph.MintyAnalyze(1);
 
                 for (int i = 0; i < mintyResult.Length; i++)
                 {
@@ -130,6 +208,9 @@ namespace Minty
 
                     Console.WriteLine();
                 }
+                */
+
+
                 //Console.WriteLine(mintyResult.ToString());
             } catch(Exception ex)
             {

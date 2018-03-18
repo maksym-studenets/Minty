@@ -21,6 +21,7 @@ namespace Minty.GraphUtils
     /// to a text file.
     /// </summary>
     [Serializable]
+    [Obsolete("Classes provided in this namespace are deprecated. Use Minty.Model instead")]
     class Graph
     {
         private const double tolerance = 0.00001;
