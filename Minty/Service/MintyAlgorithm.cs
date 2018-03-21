@@ -54,24 +54,22 @@ namespace Minty.Service
             }
         }
 
-        public LinkedList<Vertex> computePath(Vertex target)
+        public List<Vertex> computePath(Vertex target)
         {
-            LinkedList<Vertex> pathReverse = new LinkedList<Vertex>();
+            List<Vertex> pathReverse = new List<Vertex>();
             Vertex step = target;
 
-            if (predecessors[step] == null)
-            {
-                return null;
-            }
-            pathReverse.AddLast(step);
+            if (predecessors.TryGetValue(step, out Vertex predecessor)) {
+                pathReverse.Add(step);
 
-            while (predecessors[step] != null)
-            {
-                step = predecessors[step];
-                pathReverse.AddLast(step);
+                while (predecessors.TryGetValue(step, out predecessor)) {
+                    step = predecessors[step];
+                    pathReverse.Add(step);
+                }
             }
 
-            return (LinkedList<Vertex>) pathReverse.Reverse();
+            pathReverse.Reverse();
+            return pathReverse;
         }
 
         private void findMinimalDistances(Vertex node) {
@@ -79,10 +77,13 @@ namespace Minty.Service
             foreach (Vertex target in adjacentVertices) {
                 if (calculateShortestDistance(target) > calculateShortestDistance(node) +
                     calculateDistance(node, target)) {
-                    distances.Add(target, calculateShortestDistance(node) +
-                        calculateDistance(node, target));
-                    predecessors.Add(target, node);
-                    unsettledVertices.Add(target);
+                    if (!distances.ContainsKey(target))
+                    {
+                        distances.Add(target, calculateShortestDistance(node) +
+                            calculateDistance(node, target));
+                        predecessors.Add(target, node);
+                        unsettledVertices.Add(target);
+                    }
                 }
             }
         }
@@ -108,18 +109,13 @@ namespace Minty.Service
             return neighbours;
         }
 
-        private Vertex calculateMinimum(HashSet<Vertex> vertices)
-        {
+        private Vertex calculateMinimum(HashSet<Vertex> vertices) {
             Vertex minimum = null;
-            foreach (Vertex vertex in vertices)
-            {
-                if (minimum == null)
-                {
+            foreach (Vertex vertex in vertices) {
+                if (minimum == null) {
                     minimum = vertex;
-                } else
-                {
-                    if (calculateShortestDistance(vertex) < calculateShortestDistance(minimum))
-                    {
+                } else {
+                    if (calculateShortestDistance(vertex) < calculateShortestDistance(minimum)) {
                         minimum = vertex;
                     }
                 }
@@ -127,20 +123,16 @@ namespace Minty.Service
             return minimum;
         }
 
-        private bool isSettled(Vertex vertex)
-        {
+        private bool isSettled(Vertex vertex) {
             return settledVertices.Contains(vertex);
         }
 
-        private int calculateShortestDistance(Vertex destination)
-        {
-            Int32 distance = distances[destination];
-            if (distance == null)
-            {
-                return Int32.MaxValue;
-            } else
-            {
+        private int calculateShortestDistance(Vertex destination) {
+
+            if (distances.TryGetValue(destination, out int distance)) {
                 return distance;
+            } else {
+                return Int32.MaxValue;
             }
         }
     }

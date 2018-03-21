@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{E8668B32-45D9-4543-BB56-B1611E25CD68}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <RootNamespace>Minty</RootNamespace>
     <AssemblyName>Minty</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
@@ -49,7 +49,16 @@
   <PropertyGroup>
     <StartupObject />
   </PropertyGroup>
+  <PropertyGroup>
+    <NoWin32Manifest>true</NoWin32Manifest>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="GraphVizWrapper, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\GraphViz.NET.1.0.0\lib\net40\GraphVizWrapper.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -69,17 +78,25 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="GraphUtils\Graph.cs" />
-    <Compile Include="GraphUtils\IndexatorOption.cs" />
-    <Compile Include="GraphUtils\MintyVertex.cs" />
+    <Compile Include="GraphImageForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="GraphImageForm.Designer.cs">
+      <DependentUpon>GraphImageForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Model\Graph.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Model\Edge.cs" />
     <Compile Include="Model\Vertex.cs" />
     <Compile Include="Service\MintyAlgorithm.cs" />
+    <Compile Include="Util\FileSystemManager.cs" />
+    <Compile Include="Util\GraphVisualizer.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GraphImageForm.resx">
+      <DependentUpon>GraphImageForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -90,6 +107,15 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="data\net1.json" />
+    <None Include="data\net2.json" />
+    <None Include="data\net3.json" />
+    <None Include="data\net4.json" />
+    <None Include="data\net5.json" />
+    <None Include="data\net6.json" />
+    <None Include="data\template-test.dt" />
+    <None Include="data\template.dt" />
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -99,6 +125,14 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="vendor\config6" />
+    <None Include="vendor\gd.tgz" />
+    <None Include="vendor\gd.zip" />
+    <None Include="vendor\Graphviz.ini" />
+    <None Include="vendor\gts.lib" />
+    <None Include="vendor\gts.tgz" />
+    <None Include="vendor\Settings.ini" />
+    <None Include="vendor\Temp.rar" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -114,6 +148,105 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="data\template-test.dt.jpg" />
+    <Content Include="data\template.dt.jpg" />
+    <Content Include="vendor\acyclic.exe" />
+    <Content Include="vendor\ann.dll" />
+    <Content Include="vendor\bcomps.exe" />
+    <Content Include="vendor\ccomps.exe" />
+    <Content Include="vendor\cdt.dll" />
+    <Content Include="vendor\cgraph.dll" />
+    <Content Include="vendor\circo.exe" />
+    <Content Include="vendor\config.h" />
+    <Content Include="vendor\diffimg.exe" />
+    <Content Include="vendor\dijkstra.exe" />
+    <Content Include="vendor\dot.exe" />
+    <Content Include="vendor\dotty.exe" />
+    <Content Include="vendor\edgepaint.exe" />
+    <Content Include="vendor\exparse.h" />
+    <Content Include="vendor\fc-cache.exe" />
+    <Content Include="vendor\fc-cat.exe" />
+    <Content Include="vendor\fc-list.exe" />
+    <Content Include="vendor\fc-match.exe" />
+    <Content Include="vendor\fdp.exe" />
+    <Content Include="vendor\fontconfig.dll" />
+    <Content Include="vendor\fontconfig_fix.dll" />
+    <Content Include="vendor\freetype6.dll" />
+    <Content Include="vendor\gc.exe" />
+    <Content Include="vendor\getopt.h" />
+    <Content Include="vendor\glut32.dll" />
+    <Content Include="vendor\gml2gv.exe" />
+    <Content Include="vendor\graphml2gv.exe" />
+    <Content Include="vendor\gv2gml.exe" />
+    <Content Include="vendor\gvc.dll" />
+    <Content Include="vendor\gvcolor.exe" />
+    <Content Include="vendor\gvedit.exe" />
+    <Content Include="vendor\GVedit.html" />
+    <Content Include="vendor\gvgen.exe" />
+    <Content Include="vendor\gvmap.exe" />
+    <Content Include="vendor\gvpack.exe" />
+    <Content Include="vendor\gvplugin_core.dll" />
+    <Content Include="vendor\gvplugin_dot_layout.dll" />
+    <Content Include="vendor\gvplugin_gd.dll" />
+    <Content Include="vendor\gvplugin_gdiplus.dll" />
+    <Content Include="vendor\gvplugin_neato_layout.dll" />
+    <Content Include="vendor\gvplugin_pango.dll" />
+    <Content Include="vendor\gvpr.exe" />
+    <Content Include="vendor\gxl2gv.exe" />
+    <Content Include="vendor\iconv.dll" />
+    <Content Include="vendor\intl.dll" />
+    <Content Include="vendor\jpeg62.dll" />
+    <Content Include="vendor\lefty.exe" />
+    <Content Include="vendor\libatk-1.0-0.dll" />
+    <Content Include="vendor\libcairo-2.dll" />
+    <Content Include="vendor\libexpat-1.dll" />
+    <Content Include="vendor\libexpat.dll" />
+    <Content Include="vendor\libfontconfig-1.dll" />
+    <Content Include="vendor\libfreetype-6.dll" />
+    <Content Include="vendor\libgdk-win32-2.0-0.dll" />
+    <Content Include="vendor\libgdkglext-win32-1.0-0.dll" />
+    <Content Include="vendor\libgdk_pixbuf-2.0-0.dll" />
+    <Content Include="vendor\libgio-2.0-0.dll" />
+    <Content Include="vendor\libglade-2.0-0.dll" />
+    <Content Include="vendor\libglib-2.0-0.dll" />
+    <Content Include="vendor\libgmodule-2.0-0.dll" />
+    <Content Include="vendor\libgobject-2.0-0.dll" />
+    <Content Include="vendor\libgthread-2.0-0.dll" />
+    <Content Include="vendor\libgtk-win32-2.0-0.dll" />
+    <Content Include="vendor\libgtkglext-win32-1.0-0.dll" />
+    <Content Include="vendor\libltdl-3.dll" />
+    <Content Include="vendor\libpango-1.0-0.dll" />
+    <Content Include="vendor\libpangocairo-1.0-0.dll" />
+    <Content Include="vendor\libpangoft2-1.0-0.dll" />
+    <Content Include="vendor\libpangowin32-1.0-0.dll" />
+    <Content Include="vendor\libpng12.dll" />
+    <Content Include="vendor\libpng14-14.dll" />
+    <Content Include="vendor\librsvg-2-2.dll" />
+    <Content Include="vendor\libxml2.dll" />
+    <Content Include="vendor\lneato.exe" />
+    <Content Include="vendor\ltdl.dll" />
+    <Content Include="vendor\mingle.exe" />
+    <Content Include="vendor\mm2gv.exe" />
+    <Content Include="vendor\neato.exe" />
+    <Content Include="vendor\New Text Document.txt" />
+    <Content Include="vendor\nop.exe" />
+    <Content Include="vendor\osage.exe" />
+    <Content Include="vendor\patchwork.exe" />
+    <Content Include="vendor\Pathplan.dll" />
+    <Content Include="vendor\props.txt" />
+    <Content Include="vendor\prune.exe" />
+    <Content Include="vendor\QtCore4.dll" />
+    <Content Include="vendor\QtGui4.dll" />
+    <Content Include="vendor\sccmap.exe" />
+    <Content Include="vendor\sfdp.exe" />
+    <Content Include="vendor\smyrna.exe" />
+    <Content Include="vendor\tred.exe" />
+    <Content Include="vendor\twopi.exe" />
+    <Content Include="vendor\unflatten.exe" />
+    <Content Include="vendor\vmalloc.dll" />
+    <Content Include="vendor\zlib1.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

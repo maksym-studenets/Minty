@@ -38,10 +38,17 @@
             this.graphMatrixGridView = new System.Windows.Forms.DataGridView();
             this.openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.shortestPathResultTextBox = new System.Windows.Forms.TextBox();
+            this.destinationVertexComboBox = new System.Windows.Forms.ComboBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.saveGraphToFileButton = new System.Windows.Forms.Button();
             this.startVertexComboBox = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.calculateMintyShortestPathButton = new System.Windows.Forms.Button();
-            this.saveGraphToFileButton = new System.Windows.Forms.Button();
+            this.saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            this.resetFormButton = new System.Windows.Forms.Button();
+            this.visualizeGraphButton = new System.Windows.Forms.Button();
             this.manualNetworkGroupBox.SuspendLayout();
             this.readNetworkFromFileGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.graphMatrixGridView)).BeginInit();
@@ -99,7 +106,7 @@
             // 
             // readNetworkFromFileButton
             // 
-            this.readNetworkFromFileButton.Location = new System.Drawing.Point(55, 52);
+            this.readNetworkFromFileButton.Location = new System.Drawing.Point(38, 23);
             this.readNetworkFromFileButton.Name = "readNetworkFromFileButton";
             this.readNetworkFromFileButton.Size = new System.Drawing.Size(150, 23);
             this.readNetworkFromFileButton.TabIndex = 1;
@@ -109,7 +116,7 @@
             // 
             // loadNetworkFileNameTextBox
             // 
-            this.loadNetworkFileNameTextBox.Location = new System.Drawing.Point(7, 22);
+            this.loadNetworkFileNameTextBox.Location = new System.Drawing.Point(7, 52);
             this.loadNetworkFileNameTextBox.Name = "loadNetworkFileNameTextBox";
             this.loadNetworkFileNameTextBox.Size = new System.Drawing.Size(227, 20);
             this.loadNetworkFileNameTextBox.TabIndex = 0;
@@ -130,6 +137,12 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.visualizeGraphButton);
+            this.groupBox1.Controls.Add(this.resetFormButton);
+            this.groupBox1.Controls.Add(this.label4);
+            this.groupBox1.Controls.Add(this.shortestPathResultTextBox);
+            this.groupBox1.Controls.Add(this.destinationVertexComboBox);
+            this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.saveGraphToFileButton);
             this.groupBox1.Controls.Add(this.startVertexComboBox);
             this.groupBox1.Controls.Add(this.label2);
@@ -141,32 +154,38 @@
             this.groupBox1.TabIndex = 6;
             this.groupBox1.TabStop = false;
             // 
-            // startVertexComboBox
+            // label4
             // 
-            this.startVertexComboBox.FormattingEnabled = true;
-            this.startVertexComboBox.Location = new System.Drawing.Point(59, 352);
-            this.startVertexComboBox.Name = "startVertexComboBox";
-            this.startVertexComboBox.Size = new System.Drawing.Size(121, 21);
-            this.startVertexComboBox.TabIndex = 8;
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(294, 383);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(59, 13);
+            this.label4.TabIndex = 13;
+            this.label4.Text = "Результат";
             // 
-            // label2
+            // shortestPathResultTextBox
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(6, 355);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(49, 13);
-            this.label2.TabIndex = 7;
-            this.label2.Text = "Початок";
+            this.shortestPathResultTextBox.Location = new System.Drawing.Point(359, 380);
+            this.shortestPathResultTextBox.Name = "shortestPathResultTextBox";
+            this.shortestPathResultTextBox.Size = new System.Drawing.Size(253, 20);
+            this.shortestPathResultTextBox.TabIndex = 12;
             // 
-            // calculateMintyShortestPathButton
+            // destinationVertexComboBox
             // 
-            this.calculateMintyShortestPathButton.Location = new System.Drawing.Point(492, 350);
-            this.calculateMintyShortestPathButton.Name = "calculateMintyShortestPathButton";
-            this.calculateMintyShortestPathButton.Size = new System.Drawing.Size(120, 23);
-            this.calculateMintyShortestPathButton.TabIndex = 6;
-            this.calculateMintyShortestPathButton.Text = "Calculate";
-            this.calculateMintyShortestPathButton.UseVisualStyleBackColor = true;
-            this.calculateMintyShortestPathButton.Click += new System.EventHandler(this.calculateMintyShortestPathButton_Click);
+            this.destinationVertexComboBox.FormattingEnabled = true;
+            this.destinationVertexComboBox.Location = new System.Drawing.Point(66, 379);
+            this.destinationVertexComboBox.Name = "destinationVertexComboBox";
+            this.destinationVertexComboBox.Size = new System.Drawing.Size(121, 21);
+            this.destinationVertexComboBox.TabIndex = 11;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(6, 382);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(27, 13);
+            this.label3.TabIndex = 10;
+            this.label3.Text = "Стік";
             // 
             // saveGraphToFileButton
             // 
@@ -176,6 +195,54 @@
             this.saveGraphToFileButton.TabIndex = 9;
             this.saveGraphToFileButton.Text = "Зберегти у файл";
             this.saveGraphToFileButton.UseVisualStyleBackColor = true;
+            this.saveGraphToFileButton.Click += new System.EventHandler(this.saveGraphToFileButton_Click);
+            // 
+            // startVertexComboBox
+            // 
+            this.startVertexComboBox.FormattingEnabled = true;
+            this.startVertexComboBox.Location = new System.Drawing.Point(66, 352);
+            this.startVertexComboBox.Name = "startVertexComboBox";
+            this.startVertexComboBox.Size = new System.Drawing.Size(121, 21);
+            this.startVertexComboBox.TabIndex = 8;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(6, 355);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(54, 13);
+            this.label2.TabIndex = 7;
+            this.label2.Text = "Джерело";
+            // 
+            // calculateMintyShortestPathButton
+            // 
+            this.calculateMintyShortestPathButton.Location = new System.Drawing.Point(255, 350);
+            this.calculateMintyShortestPathButton.Name = "calculateMintyShortestPathButton";
+            this.calculateMintyShortestPathButton.Size = new System.Drawing.Size(207, 23);
+            this.calculateMintyShortestPathButton.TabIndex = 6;
+            this.calculateMintyShortestPathButton.Text = "Побудувати найкоротший шлях";
+            this.calculateMintyShortestPathButton.UseVisualStyleBackColor = true;
+            this.calculateMintyShortestPathButton.Click += new System.EventHandler(this.calculateMintyShortestPathButton_Click);
+            // 
+            // resetFormButton
+            // 
+            this.resetFormButton.Location = new System.Drawing.Point(537, 350);
+            this.resetFormButton.Name = "resetFormButton";
+            this.resetFormButton.Size = new System.Drawing.Size(75, 23);
+            this.resetFormButton.TabIndex = 14;
+            this.resetFormButton.Text = "Очистити";
+            this.resetFormButton.UseVisualStyleBackColor = true;
+            this.resetFormButton.Click += new System.EventHandler(this.resetFormButton_Click);
+            // 
+            // visualizeGraphButton
+            // 
+            this.visualizeGraphButton.Location = new System.Drawing.Point(9, 16);
+            this.visualizeGraphButton.Name = "visualizeGraphButton";
+            this.visualizeGraphButton.Size = new System.Drawing.Size(125, 23);
+            this.visualizeGraphButton.TabIndex = 15;
+            this.visualizeGraphButton.Text = "Візуалізувати мережу";
+            this.visualizeGraphButton.UseVisualStyleBackColor = true;
+            this.visualizeGraphButton.Click += new System.EventHandler(this.visualizeGraphButton_Click);
             // 
             // Form1
             // 
@@ -214,6 +281,13 @@
         private System.Windows.Forms.ComboBox startVertexComboBox;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button saveGraphToFileButton;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox shortestPathResultTextBox;
+        private System.Windows.Forms.ComboBox destinationVertexComboBox;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog;
+        private System.Windows.Forms.Button resetFormButton;
+        private System.Windows.Forms.Button visualizeGraphButton;
     }
 }
 

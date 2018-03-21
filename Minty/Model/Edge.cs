@@ -13,10 +13,12 @@ namespace Minty.Model
         private Vertex destination;
         private int weight;
 
-        public int Id { get => id; }
-        public Vertex Source { get => source; }
-        public Vertex Destination { get => destination; }
-        public int Weight { get => weight; }
+        public int Id { get => id; set => id = value; }
+        public Vertex Source { get => source; set => source = value; }
+        public Vertex Destination { get => destination; set => destination = value; }
+        public int Weight { get => weight; set => weight = value; }
+
+        public Edge() { }
 
         public Edge(Vertex start, Vertex end, int weight)
         {
@@ -31,6 +33,12 @@ namespace Minty.Model
             this.source = start;
             this.destination = end;
             this.weight = weight;
+        }
+
+        public override string ToString()
+        {
+            return "Edge: " + source.ToString() + " - " + destination.ToString() + 
+                ". Weight: " + weight;
         }
     }
 }

@@ -14,11 +14,18 @@ namespace Minty.Model
     {
         private int id;
 
-        public int Id { get => id; }
+        public int Id { get => id; set => id = value;  }
+
+        public Vertex() { }
 
         public Vertex(int id)
         {
             this.id = id;
+        }
+
+        override public string ToString()
+        {
+            return "Vertex " + id;
         }
     }
 }
